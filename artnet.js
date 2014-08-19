@@ -19,9 +19,9 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
         adapter.log.info('stateChange ' + id + ' ' + JSON.stringify(state));
 
         if (!state.ack && objects[id].native && objects[id].native.channel) {
-            console.log('artnet.send', objects[id].native.channel, state.val);
-            artnet.send(objects[id].native.channel, state.val, function () {
-                adapter.setState(id, {ack: true});
+            console.log('artnet.set', objects[id].native.channel, state.val);
+            artnet.set(objects[id].native.channel, parseInt(state.val, 10), function () {
+                adapter.setForeignState(id, {val: state.val, ack: true});
             });
         }
 
