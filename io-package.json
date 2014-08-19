@@ -1,0 +1,367 @@
+{
+    "common": {
+        "name":                     "artnet",
+        "version":                  "0.0.1",
+        "title":                    "Art-Net Adapter",
+        "desc":                     "fetches 48h weather forecast from yr.no",
+        "authors": [
+            "hobbyquaker <hq@ccu.io>"
+        ],
+        "license":                  "MIT",
+        "platform":                 "Javascript/Node.js",
+        "mode":                     "daemon",
+        "loglevel":                 "info",
+        "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"]
+    },
+    "native": {
+        "host": "172.16.23.15",
+        "port": 123,
+        "universe": 0
+    },
+    "objects": [
+        {
+            "_id": "artnet.meta",
+            "type": "meta",
+            "name": "artnet meta",
+            "parent": "artnet",
+            "meta": {
+                "adapter": "artnet",
+                "type": ""
+            },
+            "common": {
+
+            },
+            "native": {
+
+            }
+        },
+        {
+            "_id": "artnet.meta.fixture",
+            "type": "meta",
+            "name": "artnet fixtures",
+            "parent": "artnet.meta",
+            "meta": {
+                "adapter": "artnet",
+                "type": ""
+            },
+            "common": {
+
+            },
+            "native": {
+
+            }
+        },
+        {
+            "_id": "artnet.meta.fixture.switch",
+            "type": "meta",
+            "name": "switch",
+            "parent": "artnet.meta.fixture",
+            "meta": {
+                "adapter": "artnet",
+                "type": "fixture"
+            },
+            "common": {
+
+            },
+            "native": {
+                "device": {
+                    "type": "channel",
+                    "common": {
+                        "role": "light"
+                    },
+                    "native": {
+
+                    }
+                },
+                "state": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "switch",
+                            "type": "boolean",
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 1,
+                            "value_off": 0,
+                            "value_on": 255
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "artnet.meta.fixture.dimmer",
+            "type": "meta",
+            "name": "dimmer",
+            "parent": "artnet.meta.fixture",
+            "meta": {
+                "adapter": "artnet",
+                "type": "fixture"
+            },
+            "common": {
+
+            },
+            "native": {
+                "channel": {
+                    "type": "channel",
+                    "common": {
+                        "role": "light.dimmer"
+                    },
+                    "native": {
+
+                    }
+                },
+                "state": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.dimmer",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 1
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "artnet.meta.fixture.rgb",
+            "type": "meta",
+            "name": "rgb",
+            "parent": "artnet.meta.fixture",
+            "meta": {
+                "adapter": "artnet",
+                "type": "fixture"
+            },
+            "common": {
+
+            },
+            "native": {
+                "channel": {
+                    "type": "channel",
+                    "common": {
+                        "role": "light.color.rgb"
+                    },
+                    "native": {
+
+                    }
+                },
+                "state": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.red",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 1
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.green",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 2
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.blue",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 3
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "artnet.meta.fixture.rgbw",
+            "type": "meta",
+            "name": "rgbw",
+            "parent": "artnet.meta.fixture",
+            "meta": {
+                "adapter": "artnet",
+                "type": "fixture"
+            },
+            "common": {
+
+            },
+            "native": {
+                "channel": {
+                    "type": "channel",
+                    "common": {
+                        "role": "light.color.rgbw"
+                    },
+                    "native": {
+
+                    }
+                },
+                "state": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.red",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 1
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.green",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 2
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.blue",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 3
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.white",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 4
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "artnet.meta.fixture.cmy",
+            "type": "meta",
+            "name": "cmy",
+            "parent": "artnet.meta.fixture",
+            "meta": {
+                "adapter": "artnet",
+                "type": "fixture"
+            },
+            "common": {
+
+            },
+            "native": {
+                "channel": {
+                    "type": "channel",
+                    "common": {
+                        "role": "light.color.cmy"
+                    },
+                    "native": {
+
+                    }
+                },
+                "state": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.cyan",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 1
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.magenta",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 2
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.yellow",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 3
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.dimmer",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 4
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
