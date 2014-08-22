@@ -39,6 +39,10 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
         adapter.subscribeStates('*');
         adapter.subscribeObjects('*');
 
+        adapter.objects.getObjectView('system', 'state', {startkey: 'artnet.0', endkey: 'artnet.\u9999', include_docs: true}, function (err, res) {
+            console.log(err, res);
+        });
+
     }
 
 });

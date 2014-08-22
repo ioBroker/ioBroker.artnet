@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "artnet",
-        "version":                  "0.0.1",
+        "version":                  "0.0.3",
         "title":                    "Art-Net Adapter",
         "desc":                     "Control DMX512 Devices via an Art-Net node",
         "authors": [
@@ -36,14 +36,13 @@
         {
             "_id": "artnet.meta.switch",
             "type": "meta",
-            "name": "switch",
             "parent": "artnet.meta",
             "meta": {
                 "adapter": "artnet",
                 "type": "fixture"
             },
             "common": {
-
+                "name": "generic switch"
             },
             "native": {
                 "device": {
@@ -75,14 +74,13 @@
         {
             "_id": "artnet.meta.dimmer",
             "type": "meta",
-            "name": "dimmer",
             "parent": "artnet.meta",
             "meta": {
                 "adapter": "artnet",
                 "type": "fixture"
             },
             "common": {
-
+                "name": "generic dimmer"
             },
             "native": {
                 "channel": {
@@ -120,7 +118,7 @@
                 "type": "fixture"
             },
             "common": {
-
+                "name": "generic rgb"
             },
             "native": {
                 "channel": {
@@ -184,7 +182,7 @@
                 "type": "fixture"
             },
             "common": {
-
+                "name": "generic rgbw"
             },
             "native": {
                 "channel": {
@@ -197,6 +195,20 @@
                     }
                 },
                 "states": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.color.white",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                            "dmx_channel": 4
+                        }
+                    },
                     {
                         "type": "state",
                         "common": {
@@ -238,21 +250,8 @@
                         "native": {
                             "dmx_channel": 3
                         }
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.color.white",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": true
-                        },
-                        "native": {
-                            "dmx_channel": 4
-                        }
                     }
+
                 ]
             }
         },
@@ -265,7 +264,7 @@
                 "type": "fixture"
             },
             "common": {
-
+                "name": "generic cmy"
             },
             "native": {
                 "channel": {
@@ -278,6 +277,19 @@
                     }
                 },
                 "states": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.dimmer",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": true
+                        },
+                        "native": {
+                        }
+                    },
                     {
                         "type": "state",
                         "common": {
@@ -316,20 +328,8 @@
                         },
                         "native": {
                         }
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.dimmer",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": true
-                        },
-                        "native": {
-                        }
                     }
+
                 ]
             }
         }

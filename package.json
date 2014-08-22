@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "artnet": ">0.0.1"
+    "artnet": ">0.0.2"
   }
 }
