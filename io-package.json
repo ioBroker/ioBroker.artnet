@@ -11,7 +11,9 @@
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "loglevel":                 "info",
-        "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"]
+        "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"],
+        "icon":                     "artnet.jpeg",
+        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artmet.jpeg"
     },
     "native": {
         "host": "172.16.23.15",
