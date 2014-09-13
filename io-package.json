@@ -13,7 +13,7 @@
         "loglevel":                 "info",
         "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"],
         "icon":                     "artnet.jpeg",
-        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artmet.jpeg"
+        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.jpeg"
     },
     "native": {
         "host": "172.16.23.15",
