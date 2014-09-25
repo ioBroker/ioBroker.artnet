@@ -1,3 +1,4 @@
+![Logo](admin/artnet.jpeg)
 ioBroker.artnet
 ===============
 
