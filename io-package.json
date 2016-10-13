@@ -2,6 +2,13 @@
     "common": {
         "name":                     "artnet",
         "version":                  "0.1.0",
+        "news": {
+            "0.1.0": {
+                "en": "completely rewritten",
+                "de": "Überarbeitet",
+                "ru": "Полностью переписан"
+            }
+        },
         "title":                    "Art-Net Adapter",
         "desc":                     "Control DMX512 Devices via an Art-Net node",
         "authors": [
