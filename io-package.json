@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "artnet",
-        "version":                  "0.0.3",
+        "version":                  "0.1.0",
         "title":                    "Art-Net Adapter",
         "desc":                     "Control DMX512 Devices via an Art-Net node",
         "authors": [
@@ -12,8 +12,8 @@
         "mode":                     "daemon",
         "loglevel":                 "info",
         "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"],
-        "icon":                     "artnet.jpeg",
-        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.jpeg"
+        "icon":                     "artnet.png",
+        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png"
     },
     "native": {
         "host": "172.16.23.15",
@@ -47,15 +47,16 @@
                 "name": "generic switch"
             },
             "native": {
-                "device": {
+                "channel": {
                     "type": "channel",
                     "common": {
-                        "role": "light"
+                        "role": "switch"
                     },
                     "native": {
 
                     }
                 },
+                "length": 1,
                 "states": [
                     {
                         "type": "state",
@@ -63,7 +64,7 @@
                             "role": "switch",
                             "type": "boolean",
                             "write": true,
-                            "read": true
+                            "read":  false
                         },
                         "native": {
                             "value_off": 0,
@@ -94,16 +95,17 @@
 
                     }
                 },
+                "length": 1,
                 "states": [
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.dimmer",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
+                            "role":  "level.dimmer",
+                            "type":  "number",
+                            "min":   0,
+                            "max":   255,
                             "write": true,
-                            "read": true
+                            "read":  false
                         },
                         "native": {
                         }
@@ -126,22 +128,21 @@
                 "channel": {
                     "type": "channel",
                     "common": {
-                        "role": "light.color.rgb"
+                        "role": "light.rgb"
                     },
                     "native": {
 
                     }
                 },
+                "length": 3,
                 "states": [
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.red",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
+                            "role": "level.rgb",
+                            "type": "string",
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                         }
@@ -149,12 +150,12 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.green",
+                            "role": "level.rgb.red",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                         }
@@ -162,12 +163,25 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.blue",
+                            "role": "level.rgb.green",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
+                        },
+                        "native": {
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.rgb.blue",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
                         },
                         "native": {
                         }
@@ -190,22 +204,34 @@
                 "channel": {
                     "type": "channel",
                     "common": {
-                        "role": "light.color.rgbw"
+                        "role": "light.rgbw"
                     },
                     "native": {
 
                     }
                 },
+                "length": 4,
                 "states": [
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.white",
+                            "role": "level.rgb",
+                            "type": "string",
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.rgbw.white",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                             "dmx_channel": 4
@@ -214,12 +240,12 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.red",
+                            "role": "level.rgbw.red",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                             "dmx_channel": 1
@@ -228,12 +254,12 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.green",
+                            "role": "level.rgbw.green",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                             "dmx_channel": 2
@@ -242,12 +268,12 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.blue",
+                            "role": "level.rgbw.blue",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                             "dmx_channel": 3
@@ -272,12 +298,13 @@
                 "channel": {
                     "type": "channel",
                     "common": {
-                        "role": "light.color.cmy"
+                        "role": "light.cmy"
                     },
                     "native": {
 
                     }
                 },
+                "length": 4,
                 "states": [
                     {
                         "type": "state",
@@ -287,7 +314,7 @@
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                         }
@@ -295,12 +322,12 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.cyan",
+                            "role": "level.cmy.cyan",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                         }
@@ -308,12 +335,12 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.magenta",
+                            "role": "level.cmy.magenta",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                         }
@@ -321,17 +348,16 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.color.yellow",
+                            "role": "level.cmy.yellow",
                             "type": "number",
                             "min": 0,
                             "max": 255,
                             "write": true,
-                            "read": true
+                            "read": false
                         },
                         "native": {
                         }
                     }
-
                 ]
             }
         }

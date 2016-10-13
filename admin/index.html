@@ -1,28 +1,262 @@
 <html>
 
 <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
+
 <script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
-
-<link rel="stylesheet" type="text/css" href="../../lib/css/jqGrid/ui.jqgrid-4.5.4.css"/>
-<script type="text/javascript" src="../../lib/js/jqGrid/jquery.jqGrid-4.5.4.min.js"></script>
-<script type="text/javascript" src="../../lib/js/jqGrid/i18n/grid.locale-en.js"></script>
-
-
-<!--
-<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
-<script type="text/javascript" src="../../lib/js/jquery.multiselect-1.13.min.js"></script>
--->
-
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
-<script type="text/javascript" src="script.js"></script>
 
-
+<style>
+    #grid-devices tr:nth-child(even) {
+        background: lightgray;
+    }
+</style>
 <script type="text/javascript">
+    systemDictionary = {
+        "Art-Net adapter settings": {
+            "en": "Art-Net adapter settings",
+            "de": "Art-Net adapter settings",
+            "ru": "Art-Net adapter settings"
+        },
+        "help":             {
+            "en": "The devices can be only created and deleted here. To change the name, please use admin object editor. To change the address or type the device must deleted and created anew.",
+            "de": "Die Geräte können huer nur erzeugt oder gelöscht werden. Um den Namen zu ändern, benutzen Sie bitte Admin-Lasche-\"Objekte\". Um die Adresse oder den Typ zu ändern, das Gerät muss neu erzuegt werden.",
+            "ru": "На этой странице можно только добавлять и удалять устройства. Что бы поменять имя воспользуйтесь страницей \"Объекты\" в Админе. Что бы поменять тип или адрес нужно удалить устройство и создать его заново."
+        },
+        "Art-Net node":     {"en": "Art-Net node",      "de": "Art-Net Node",           "ru": "Art-Net шлюз"},
+        "DMX512 devices":   {"en": "DMX512 devices",    "de": "DMX512 Geräte",          "ru": "DMX512 устройства"},
+        "Host":             {"en": "Host IP address",   "de": "Host IP Adresse",        "ru": "IP Адрес Хоста"},
+        "Port":             {"en": "Port",              "de": "Port",                   "ru": "Порт"},
+        "DMX Universe":     {"en": "DMX Universe",      "de": "DMX Universe",           "ru": "DMX Universe"},
+        "Name":             {"en": "Name",              "de": "Name",                   "ru": "Имя"},
+        "Address":          {"en": "Address",           "de": "Adresse",                "ru": "Адрес"},
+        "Type":             {"en": "Type",              "de": "Typ",                    "ru": "Тип"},
+        "Fixture":          {"en": "Fixture",           "de": "Ausstattung",            "ru": "Роль"},
+        "First address":    {"en": "First address",     "de": "Erste Addresse",         "ru": "First address"},
+        "choose fixture":   {"en": "Choose fixture",    "de": "Ausstattung wählen",     "ru": "Выберете тип"},
+        "Add device":       {"en": "Add device",        "de": "Gerät hinzufügen",       "ru": "Добавить устройство"},
+        "Cancel":           {"en": "Cancel",            "de": "Abbrechen",              "ru": "Отмена"},
+        "Count":            {"en": "Count",             "de": "Anzahl",                 "ru": "Количество"},
+        "switch":           {"en": "switch",            "de": "Schalter",               "ru": "Переключатель"},
+        "light.dimmer":     {"en": "dimmer",            "de": "Dimmer",                 "ru": "Диммер"},
+        "light.rgb":        {"en": "RGB Light",         "de": "RGB Licht",              "ru": "RGB свет"},
+        "light.rgbw":       {"en": "RGBW Light",        "de": "RGBW Licht",             "ru": "RGBW свет"},
+        "light.cmy":        {"en": "CMY Light",         "de": "CMY Licht",              "ru": "CMY свет"},
+        "Are you sure?":    {"en": "Are you sure?",     "de": "Sind Sie sicher?",       "ru": "Вы уверены?"}
+    };
 
+    var objects = {};
+
+    function addDevice(name, firstAddress, fixture, callback) {
+        if (typeof name === 'object') {
+            if (!name || !name.length) {
+                if (callback) callback();
+                return;
+            }
+            var _name = name.shift();
+            addDevice(_name, firstAddress, fixture, function () {
+                addDevice(name, firstAddress + fixture.native.length, fixture, callback);
+            });
+        } else {
+            var deviceObj = JSON.parse(JSON.stringify(fixture.native.channel));
+            var deviceId = 'artnet.' + instance + '.' + fixture._id.split('.').pop() + '.' + firstAddress;
+
+            deviceObj._id = deviceId;
+
+            deviceObj.common.name = name || deviceId;
+            deviceObj.native.address = firstAddress;
+            deviceObj.native.length  = fixture.native.length;
+
+            var objs = JSON.parse(JSON.stringify(fixture.native.states));
+
+            showDevice(deviceObj);
+
+            for (var i = 0; i < objs.length; i++) {
+                var dpType = objs[i].common.role.split('.').pop();
+
+                var id = deviceId + '.' + dpType;
+                objs[i].common.name    = name ? name + ' ' + dpType : id;
+                objs[i].parent         = deviceId;
+                objs[i]._id            = id;
+                objs[i].native.channel = firstAddress++;
+            }
+            objs.push(deviceObj);
+
+            function insertObjs(_objs) {
+                if (!_objs || !_objs.length) {
+                    console.log('done ' + deviceId);
+                    callback && callback();
+                } else {
+                    var obj = _objs.pop();
+                    console.log('Add ' + objs._id);
+                    socket.emit('setObject', obj._id, obj, function () {
+                        insertObjs(_objs);
+                    });
+                }
+            }
+
+            insertObjs(objs);
+        }
+    }
+    
+    function load(settings, onChange) {
+        for (var key in settings) {
+            if ($('#' + key + '.value').attr('type') == 'checkbox') {
+                $('#' + key + '.value').prop('checked', settings[key]).change(function() {
+                    onChange();
+                });
+            } else {
+                $('#' + key + '.value').val(settings[key]).change(function() {
+                    onChange();
+                }).keyup(function () {
+                    $(this).trigger('change');
+                })
+            }
+        }
+        onChange(false);
+
+        var fixtures = {};
+
+        socket.emit('getObjectView', 'system', 'meta', {startkey: 'artnet.meta.', endkey: 'artnet.meta.\u9999', include_docs: true}, function (err, res) {
+            for (var i = res.rows.length - 1; i >= 0; i--) {
+                var row = res.rows[i];
+                fixtures[row.id] = row.value;
+                $('#fixture').append('<option value="' + row.id + '">' + _(row.value.native.channel.common.role) + '</option>');
+            }
+        });
+
+        $('#tabs').tabs();
+
+        $('#dialog-fixture').dialog({
+            autoOpen: false,
+            width:    400,
+            height:   300,
+            modal:    true,
+            title:    _('choose fixture'),
+            buttons:  [
+                {
+                    text: _('Add device'),
+                    click: function() {
+                        var name         = $('#name').val();
+                        var firstAddress = parseInt($('#first-address').val(), 10);
+                        var fixture      = fixtures[$('#fixture').val()];
+                        var count        = parseInt($('#fixture-count').val(), 10);
+
+                        if (count === 1) {
+                            addDevice(name, firstAddress, fixture, function () {
+                                $('#dialog-fixture').dialog('close');
+                            });
+                        } else {
+                            var names = [];
+                            for (var i = 0; i < count; i++) {
+                                names.push(name + ' ' + (i + 1));
+                            }
+
+                            addDevice(names, firstAddress, fixture, function () {
+                                $('#dialog-fixture').dialog('close');
+                            });
+                        }
+                    }
+                },
+                {
+                    text: _('Cancel'),
+                    click: function () {
+                        $(this).dialog('close');
+                    }
+                }
+            ]
+        });
+
+        $('#add').button({
+            label: _('Add device'),
+            icons: {
+                primary: 'ui-icon-plus'
+            }
+        }).click(function () {
+            // find next free address
+            var max = 1;
+            $('.device').each(function () {
+                var id = $(this).data('channel');
+                if (objects[id].native.address + objects[id].native.length > max) max = objects[id].native.address + objects[id].native.length;
+            });
+
+            $('#fixture-count').val(1);
+            $('#first-address').val(max);
+            $('#dialog-fixture').dialog('open');
+        });
+
+        socket.emit('getObjectView', 'system', 'channel', {startkey: 'artnet.' + instance + '.', endkey: 'artnet.' + instance + '.\u9999', include_docs: true}, function (err, res) {
+            res.rows.sort(function (a, b) {
+                if (a.value.native.address > b.value.native.address) return 1;
+                if (a.value.native.address < b.value.native.address) return -1;
+                return 0;
+            });
+
+            for (var i = 0; i < res.rows.length; i++) {
+                showDevice(res.rows[i].value);
+            }
+        });
+    }
+
+    function save(callback) {
+        var obj = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            var id = $this.attr('id');
+
+            if ($this.attr('type') == 'checkbox') {
+                obj[id] = $this.prop('checked');
+            } else {
+                obj[id] = $this.val();
+            }
+        });
+        callback(obj);
+    }
+
+    function deleteState(id) {
+        socket.emit('delObject', id, function (err) {
+            socket.emit('delState', id, function (err) {
+
+            });
+        });
+    }
+
+    function showDevice(obj) {
+        objects[obj._id] = obj;
+        var text = '';
+        text += '<tr class="device" data-channel="' + obj._id + '">';
+        text += '<td style="text-align: right;  width: 150px">' + obj.common.name + '</td>';
+        text += '<td style="text-align: center; width: 100px">' + obj.native.address + '</td>';
+        text += '<td style="text-align: center; width: 100px">' + _(obj.common.role) + '</td>';
+        text += '<td style="text-align: center"><button class="del" data-id="' + obj._id + '"></button></td>';
+        text += '</tr>';
+
+        $('#grid-devices').append(text);
+
+        $('button[data-id="' + obj._id + '"]').button({
+            text: false,
+            icons: {
+                primary: 'ui-icon-trash'
+            }
+        }).css({width: 22, height: 22}).click(function () {
+            var id = $(this).data('id');
+            if (confirm(_('Are you sure?'))) {
+                socket.emit('delObject', id, function () {
+                    socket.emit('getObjectView', 'system', 'state', {startkey: id + '.', endkey: id + '.\u9999', include_docs: true}, function (err, res) {
+                        for (var i = 0; i < res.rows.length; i++) {
+                            deleteState(res.rows[i].id);
+                        }
+                        $('tr[data-channel="' + id + '"]').remove();
+                        delete objects[id];
+                    });
+                });
+            }
+        });
+    }
 
 </script>
 
@@ -30,40 +264,57 @@
 
     <div id="tabs">
         <ul>
-            <li><a href="#settings">Art-Net node</a></li>
-            <li><a href="#devices">DMX512 devices</a></li>
+            <li><a href="#settings" class="translate">Art-Net node</a></li>
+            <li><a href="#devices" class="translate">DMX512 devices</a></li>
         </ul>
         <div id="settings">
+            <table><tr><td><img src="artnet.png" width="64" height="64"></td><td><h3 class="translate">Art-Net adapter settings</h3></td></tr></table>
+
             <table>
-                <tr><td>Host</td><td><input class="value" type="text" id="host" size="20"></td></tr>
-                <tr><td>Port</td><td><input class="value" type="text" id="port" size="20"></td></tr>
-                <tr><td>DMX Universe</td><td><input class="value" type="text" id="universe" size="20"></td></tr>
+                <tr><td class="translate">Host</td><td><input class="value" type="text" id="host" size="20"></td></tr>
+                <tr><td class="translate">Port</td><td><input class="value" type="text" id="port" size="20"></td></tr>
+                <tr><td class="translate">DMX Universe</td><td><input class="value" type="text" id="universe" size="20"></td></tr>
             </table>
         </div>
         <div id="devices">
-            <table id="grid-devices"></table>
-            <div id="pager-devices"></div>
+            <p class="translate">help</p>
+            <button id="add"></button>
+            <!--table id="grid-devices"></table>
+            <div id="pager-devices"></div-->
+            <table>
+                <thead>
+                <tr class="ui-widget-header">
+                    <td style="width: 40px; text-align: center" class="translate">Name</td>
+                    <td style="width: 40px; text-align: center" class="translate">Address</td>
+                    <td style="width: 70px; text-align: center" class="translate">Type</td>
+                    <td style="width: 30px; text-align: center" class="translate"></td>
+                </tr>
+                </thead>
+                <tbody id="grid-devices">
+
+                </tbody>
+            </table>
         </div>
     </div>
 
 </div>
-<div id="dialog-fixture" title="choose fixture">
+<div id="dialog-fixture">
     <table>
         <tr>
-            <td>Name</td>
+            <td class="translate">Name</td>
             <td><input id="name" type="text"></td>
         </tr>
         <tr>
-            <td>Fixture</td>
+            <td class="translate">Fixture</td>
             <td><select id="fixture">
             </select></td>
         </tr>
-        <!-- TODO add multiple devices at once <tr>
-            <td>Count</td>
-            <td><input id="fixture-count" type="number"/></td>
-        </tr> -->
         <tr>
-            <td>First address</td>
+            <td class="translate">Count</td>
+            <td><input id="fixture-count" type="number"/></td>
+        </tr>
+        <tr>
+            <td class="translate">First address</td>
             <td><input id="first-address" type="number"/></td>
         </tr>
     </table>
