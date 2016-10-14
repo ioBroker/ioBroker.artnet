@@ -11,7 +11,7 @@ Control DMX512 Devices via an Art-Net node
 You can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/avr/dmx-avr-artnetnode].
 
 ## Changelog
-### 0.1.0 (2016-10-13)
+### 0.1.1 (2016-10-14)
 * (bluefox) completely rewritten
 
 ### 0.0.1 (2014-10-19)
