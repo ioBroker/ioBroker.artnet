@@ -138,7 +138,7 @@ var adapter = utils.adapter({
         adapter.subscribeStates('*');
         adapter.subscribeObjects('*');
 
-        adapter.objects.getObjectView('system', 'state', {startkey: 'artnet.0', endkey: 'artnet.\u9999', include_docs: true}, function (err, res) {
+        adapter.objects.getObjectView('system', 'state', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, res) {
             if (err) {
                 adapter.log.error('Cannot get objects: ' + err);
             } else {
