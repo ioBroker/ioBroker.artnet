@@ -67,7 +67,7 @@
 
             deviceObj._id = deviceId;
 
-            deviceObj.common.name = name || deviceId;
+            deviceObj.common.name    = name || deviceId;
             deviceObj.native.address = firstAddress;
             deviceObj.native.length  = fixture.native.length;
 
@@ -93,8 +93,21 @@
                 } else {
                     var obj = _objs.pop();
                     console.log('Add ' + objs._id);
-                    socket.emit('setObject', obj._id, obj, function () {
-                        insertObjs(_objs);
+                    socket.emit('getObject', obj._id, function (err, _obj) {
+                        if (!_obj) {
+                            setTimeout(function () {
+                                socket.emit('setObject', obj._id, obj, function () {
+                                    insertObjs(_objs);
+                                });
+                            }, 50);
+                        } else {
+                            _obj.native = obj.native;
+                            setTimeout(function () {
+                                socket.emit('setObject', _obj._id, _obj, function () {
+                                    insertObjs(_objs);
+                                });
+                            }, 50)
+                        }
                     });
                 }
             }
@@ -226,23 +239,27 @@
     }
 
     function showDevice(obj) {
-        objects[obj._id] = obj;
         var text = '';
-        text += '<tr class="device" data-channel="' + obj._id + '">';
         text += '<td style="text-align: right;  width: 150px">' + obj.common.name + '</td>';
         text += '<td style="text-align: center; width: 100px">' + obj.native.address + '</td>';
         text += '<td style="text-align: center; width: 100px">' + _(obj.common.role) + '</td>';
         text += '<td style="text-align: center"><button class="del" data-id="' + obj._id + '"></button></td>';
-        text += '</tr>';
 
-        $('#grid-devices').append(text);
+        if (objects[obj._id]) {
+            $('tr[data-channel="' + id + '"]').html(text);
+        } else {
+            text = '<tr class="device" data-channel="' + obj._id + '">' + text + '</tr>';
+            $('#grid-devices').append(text);
+        }
+
+        objects[obj._id] = obj;
 
         $('button[data-id="' + obj._id + '"]').button({
             text: false,
             icons: {
                 primary: 'ui-icon-trash'
             }
-        }).css({width: 22, height: 22}).click(function () {
+        }).css({width: 22, height: 22}).unbind('click').click(function () {
             var id = $(this).data('id');
             if (confirm(_('Are you sure?'))) {
                 socket.emit('delObject', id, function () {
