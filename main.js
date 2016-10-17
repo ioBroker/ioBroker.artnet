@@ -5,7 +5,10 @@
 var artnet;
 var utils  = require(__dirname + '/lib/utils'); // Get common adapter utils
 
-var objects = {};
+var states   = {};
+var values   = {};
+var channels = {};
+var timers   = {};
 
 function splitColor(rgb) {
     if (!rgb) rgb = '#000000';
@@ -16,7 +19,11 @@ function splitColor(rgb) {
     var g = parseInt(rgb[2] + rgb[3], 16);
     var b = parseInt(rgb[4] + rgb[5], 16);
 
-    return [r, g, b];
+    if (rgb.length >= 8) {
+        return [r, g, b, parseInt(rgb[6] + rgb[7], 16)];
+    } else {
+        return [r, g, b];
+    }
 }
 
 function getColor(r, g, b) {
@@ -34,28 +41,69 @@ function getColor(r, g, b) {
 
 function getRgbValues(channel, callback) {
     var count = 0;
-    if (objects[channel + '.red'].value === undefined) {
+    if (states[channel + '.red'].value === undefined) {
         count++;
         adapter.getForeignState(channel + '.red', function (err, state) {
-            objects[channel + '.red'].value = state ? parseInt(state.val, 10) : 0;
+            states[channel + '.red'].value = state ? parseInt(state.val, 10) : 0;
             if (!--count && callback) callback();
         });
     }
-    if (objects[channel + '.green'].value === undefined) {
+    if (states[channel + '.green'].value === undefined) {
         count++;
         adapter.getForeignState(channel + '.green', function (err, state) {
-            objects[channel + '.green'].value = state ? parseInt(state.val, 10) : 0;
+            states[channel + '.green'].value = state ? parseInt(state.val, 10) : 0;
             if (!--count && callback) callback();
         });
     }
-    if (objects[channel + '.blue'].value === undefined) {
+    if (states[channel + '.blue'].value === undefined) {
         count++;
         adapter.getForeignState(channel + '.blue', function (err, state) {
-            objects[channel + '.blue'].value = state ? parseInt(state.val, 10) : 0;
+            states[channel + '.blue'].value = state ? parseInt(state.val, 10) : 0;
             if (!--count && callback) callback();
         });
     }
     if (!count && callback) callback();
+}
+
+function setDelayed(options, callback) {
+    if (!options.interval || options.start === null) {
+        artnet.set(adapter.config.universe, states[id].native.channel, state.val, function () {
+            if (callback) callback();
+            callback = null;
+        });
+        return;
+    }
+
+    if (options.index === undefined) {
+        options.index = 1;
+        options.stepVal  = Math.round((options.end - options.start) / 10);
+        options.stepTime = Math.round(options.interval / 10);
+        if (options.stepTime < 15) {
+            options.stepTime = 15;
+            options.stepVal  = Math.round((options.end - options.start) / (options.interval / options.stepTime));
+        }
+
+        // stop previous process
+        if (timers[options.channel]) {
+            clearTimeout(timers[options.channel]);
+            timers[options.channel] = null;
+        }
+    }
+    var value = options.start + options.stepVal * options.index;
+    options.index++;
+    if ((options.start > options.end && value <= options.end) || (options.start <= options.end && value >= options.end)) {
+        adapter.log.debug('End control: channel - ' + options.channel + ', value - ' + options.end);
+        artnet.set(adapter.config.universe, options.channel, options.end, function () {
+            timers[options.channel] = null;
+            if (callback) callback();
+            callback = null;
+        });
+    } else {
+        adapter.log.debug('Control: channel - ' + options.channel + ', value - ' + value);
+        artnet.set(adapter.config.universe, options.channel, value, function () {
+            timers[options.channel] = setTimeout(setDelayed, options.stepTime, options, callback);
+        });
+    }
 }
 
 var adapter = utils.adapter({
@@ -64,31 +112,37 @@ var adapter = utils.adapter({
 
     objectChange: function (id, obj) {
         if (obj) {
-            objects[id] = obj;
+            if (obj.type === 'states') {
+                states[id] = obj;
+            } else {
+                channels[id] = obj;
+            }
         } else {
-            if (objects[id]) delete objects[id];
+            if (states[id])   delete states[id];
+            if (channels[id]) delete channels[id];
         }
     },
 
     stateChange: function (id, state) {
         adapter.log.debug('stateChange ' + id + ': ' + JSON.stringify(state));
 
-        if (state && !state.ack && objects[id].native && objects[id].native.channel) {
-            console.log('artnet.set', objects[id].native.channel, state.val);
+        if (state && !state.ack && states[id].native && states[id].native.channel) {
+            console.log('artnet.set', states[id].native.channel, state.val);
 
-            if (objects[id].common.role === 'level.rgb') {
+            if (states[id].common.role === 'level.rgb') {
                 var rgb = splitColor(state.val);
                 var parts = id.split('.');
                 parts.pop();
                 var channel = parts.join('.');
-                objects[channel + '.red'].value   = rgb[0];
-                objects[channel + '.green'].value = rgb[1];
-                objects[channel + '.blue'].value  = rgb[2];
-                artnet.set(adapter.config.universe, objects[channel + '.red'].native.channel, rgb[0], function () {
+                states[channel + '.red'].value   = rgb[0];
+                states[channel + '.green'].value = rgb[1];
+                states[channel + '.blue'].value  = rgb[2];
+
+                artnet.set(adapter.config.universe, states[channel + '.red'].native.channel, rgb[0], function () {
                     adapter.setForeignState(channel + '.red', {val: rgb[0], ack: true});
-                    artnet.set(adapter.config.universe, objects[channel + '.green'].native.channel, rgb[1], function () {
+                    artnet.set(adapter.config.universe, states[channel + '.green'].native.channel, rgb[1], function () {
                         adapter.setForeignState(channel + '.green', {val: rgb[1], ack: true});
-                        artnet.set(adapter.config.universe, objects[channel + '.blue'].native.channel, rgb[2], function () {
+                        artnet.set(adapter.config.universe, states[channel + '.blue'].native.channel, rgb[2], function () {
                             adapter.setForeignState(channel + '.blue', {val: rgb[2], ack: true});
                             adapter.setForeignState(id, {val: getColor(rgb[0], rgb[1], rgb[2]), ack: true});
                         });
@@ -98,20 +152,38 @@ var adapter = utils.adapter({
                 if (state.val === 'true')  state.val = true;
                 if (state.val === 'false') state.val = false;
 
-                if (objects[id].native.value_off !== undefined && (state.val === false || state.val === 'false')) state.val = objects[id].native.value_off;
-                if (objects[id].native.value_on  !== undefined && (state.val === true  || state.val === 'true'))  state.val = objects[id].native.value_on;
+                if (states[id].native.value_off !== undefined && (state.val === false || state.val === 'false')) state.val = states[id].native.value_off;
+                if (states[id].native.value_on  !== undefined && (state.val === true  || state.val === 'true'))  state.val = states[id].native.value_on;
+
+                var oldValue = null;
+                if (values[id]) {
+                    oldValue = values[id].val;
+                    if (states[id].native.value_off !== undefined && (oldValue === false || oldValue === 'false')) oldValue = states[id].native.value_off;
+                    if (states[id].native.value_on  !== undefined && (oldValue === true  || oldValue === 'true'))  oldValue = states[id].native.value_on;
+                }
 
                 state.val = parseInt(state.val, 10) || 0;
-                artnet.set(adapter.config.universe, objects[id].native.channel, state.val, function () {
+
+                var parts = id.split('.');
+                parts.pop();
+                var channelId = parts.join('.');
+
+                setDelayed({
+                    channel:  states[id].native.channel,
+                    start:    oldValue,
+                    end:      state.val,
+                    interval: channels[channelId] ? channels[channelId].native.interval : 0
+                }, function () {
                     adapter.setForeignState(id, {val: state.val, ack: true});
+                    values[id] = state;
 
                     var parts = id.split('.');
                     var color = parts.pop();
                     var channel = parts.join('.');
-                    if (objects[channel + '.rgb']) {
-                        objects[channel + '.' + color].value = state.val;
+                    if (states[channel + '.rgb']) {
+                        states[channel + '.' + color].value = state.val;
                         getRgbValues(channel, function () {
-                            adapter.setForeignState(channel + '.rgb', getColor(objects[channel + '.red'].value, objects[channel + '.green'].value, objects[channel + '.blue'].value), true);
+                            adapter.setForeignState(channel + '.rgb', getColor(states[channel + '.red'].value, states[channel + '.green'].value, states[channel + '.blue'].value), true);
                         });
                     }
                 });
@@ -139,13 +211,24 @@ var adapter = utils.adapter({
         adapter.subscribeObjects('*');
 
         adapter.objects.getObjectView('system', 'state', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, res) {
-            if (err) {
-                adapter.log.error('Cannot get objects: ' + err);
-            } else {
-                for (var i = res.rows.length - 1; i >= 0; i--) {
-                    objects[res.rows[i].id] = res.rows[i].value;
+            adapter.objects.getObjectView('system', 'channel', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, _channels) {
+                if (_channels) {
+                    for (var i = _channels.rows.length - 1; i >= 0; i--) {
+                        channels[_channels.rows[i].id] = _channels.rows[i].value;
+                    }
                 }
-            }
+
+                adapter.getStates('*', function (err, _states) {
+                    values = _states;
+                    if (err) {
+                        adapter.log.error('Cannot get states: ' + err);
+                    } else {
+                        for (var i = res.rows.length - 1; i >= 0; i--) {
+                            states[res.rows[i].id] = res.rows[i].value;
+                        }
+                    }
+                });
+            });
         });
     }
 });

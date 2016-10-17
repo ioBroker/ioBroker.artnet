@@ -4,4 +4,5 @@ test
 tmp
 .travis.yml
 .idea
-node-modules
+.git
+node_modules

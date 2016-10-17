@@ -67,9 +67,10 @@
 
             deviceObj._id = deviceId;
 
-            deviceObj.common.name    = name || deviceId;
-            deviceObj.native.address = firstAddress;
-            deviceObj.native.length  = fixture.native.length;
+            deviceObj.common.name     = name || deviceId;
+            deviceObj.native.address  = firstAddress;
+            deviceObj.native.length   = fixture.native.length;
+            deviceObj.native.interval = 0;
 
             var objs = JSON.parse(JSON.stringify(fixture.native.states));
 
@@ -93,21 +94,8 @@
                 } else {
                     var obj = _objs.pop();
                     console.log('Add ' + objs._id);
-                    socket.emit('getObject', obj._id, function (err, _obj) {
-                        if (!_obj) {
-                            setTimeout(function () {
-                                socket.emit('setObject', obj._id, obj, function () {
-                                    insertObjs(_objs);
-                                });
-                            }, 50);
-                        } else {
-                            _obj.native = obj.native;
-                            setTimeout(function () {
-                                socket.emit('setObject', _obj._id, _obj, function () {
-                                    insertObjs(_objs);
-                                });
-                            }, 50)
-                        }
+                    socket.emit('setObject', obj._id, obj, function () {
+                        insertObjs(_objs);
                     });
                 }
             }
@@ -239,27 +227,63 @@
     }
 
     function showDevice(obj) {
+        objects[obj._id] = obj;
         var text = '';
+        text += '<tr class="device" data-channel="' + obj._id + '">';
         text += '<td style="text-align: right;  width: 150px">' + obj.common.name + '</td>';
         text += '<td style="text-align: center; width: 100px">' + obj.native.address + '</td>';
         text += '<td style="text-align: center; width: 100px">' + _(obj.common.role) + '</td>';
+        text += '<td style="text-align: center; width: 100px"><select class="interval" data-id="' + obj._id + '">' +
+                '<option value="0" class="translate">none</option>' +
+                '<option value="100">100ms</option>' +
+                '<option value="200">200ms</option>' +
+                '<option value="300">300ms</option>' +
+                '<option value="400">400ms</option>' +
+                '<option value="500">500ms</option>' +
+                '<option value="600">600ms</option>' +
+                '<option value="700">700ms</option>' +
+                '<option value="800">800ms</option>' +
+                '<option value="900">900ms</option>' +
+                '<option value="1000">1s</option>' +
+                '<option value="1100">1s 100ms</option>' +
+                '<option value="1200">1s 200ms</option>' +
+                '<option value="1300">1s 300ms</option>' +
+                '<option value="1400">1s 400ms</option>' +
+                '<option value="1500">1s 500ms</option>' +
+                '<option value="1600">1s 600ms</option>' +
+                '<option value="1700">1s 700ms</option>' +
+                '<option value="1800">1s 800ms</option>' +
+                '<option value="1900">1s 900ms</option>' +
+                '<option value="2000">2s</option>' +
+                '<option value="2500">2.5s</option>' +
+                '<option value="3000">3s</option>' +
+                '<option value="3500">3.5s</option>' +
+                '<option value="4000">4s</option>' +
+                '<option value="4500">4.5s</option>' +
+                '<option value="5500">5.5s</option>' +
+                '<option value="6000">6s</option>' +
+                '<option value="7000">7s</option>' +
+                '<option value="8000">8s</option>' +
+                '<option value="9000">9s</option>' +
+                '<option value="10000">10s</option>' +
+                '<option value="12000">12s</option>' +
+                '<option value="15000">15s</option>' +
+                '<option value="17000">17s</option>' +
+                '<option value="20000">20s</option>' +
+                '<option value="25000">25s</option>' +
+                '<option value="30000">30s</option>' +
+                '</select></td>';
         text += '<td style="text-align: center"><button class="del" data-id="' + obj._id + '"></button></td>';
+        text += '</tr>';
 
-        if (objects[obj._id]) {
-            $('tr[data-channel="' + id + '"]').html(text);
-        } else {
-            text = '<tr class="device" data-channel="' + obj._id + '">' + text + '</tr>';
-            $('#grid-devices').append(text);
-        }
-
-        objects[obj._id] = obj;
+        $('#grid-devices').append(text);
 
         $('button[data-id="' + obj._id + '"]').button({
             text: false,
             icons: {
                 primary: 'ui-icon-trash'
             }
-        }).css({width: 22, height: 22}).unbind('click').click(function () {
+        }).css({width: 22, height: 22}).click(function () {
             var id = $(this).data('id');
             if (confirm(_('Are you sure?'))) {
                 socket.emit('delObject', id, function () {
@@ -273,6 +297,17 @@
                 });
             }
         });
+
+        $('.interval[data-id="' + obj._id + '"]').change(function () {
+            var $this = $(this);
+            var id = $this.data('id');
+            objects[id].native.interval = parseInt($this.val(), 10);
+            $(this).prop('disabled', true);
+
+            socket.emit('setObject', id, objects[id], function () {
+                $this.prop('disabled', false);
+            });
+        }).val(obj.native.interval || 0);
     }
 
 </script>
@@ -304,6 +339,7 @@
                     <td style="width: 40px; text-align: center" class="translate">Name</td>
                     <td style="width: 40px; text-align: center" class="translate">Address</td>
                     <td style="width: 70px; text-align: center" class="translate">Type</td>
+                    <td style="width: 70px; text-align: center" class="translate">Interval</td>
                     <td style="width: 30px; text-align: center" class="translate"></td>
                 </tr>
                 </thead>

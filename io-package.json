@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "artnet",
-        "version":                  "0.1.1",
+        "version":                  "0.1.2",
         "news": {
+            "0.1.2": {
+                "en": "add action interval",
+                "de": "Ausführungsintervall hinzugefügt",
+                "ru": "Добавлен интервал выполнения"
+            },
             "0.1.1": {
                 "en": "completely rewritten",
                 "de": "Überarbeitet",
@@ -146,17 +151,6 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb",
-                            "type": "string",
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {
-                        }
-                    },
-                    {
-                        "type": "state",
-                        "common": {
                             "role": "level.rgb.red",
                             "type": "number",
                             "min": 0,
@@ -192,6 +186,17 @@
                         },
                         "native": {
                         }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.rgb",
+                            "type": "string",
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {
+                        }
                     }
                 ]
             }
@@ -222,8 +227,36 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb",
-                            "type": "string",
+                            "role": "level.rgbw.red",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.rgbw.green",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {
+                        }
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.rgbw.blue",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
                             "write": true,
                             "read": false
                         },
@@ -241,52 +274,19 @@
                             "read": false
                         },
                         "native": {
-                            "dmx_channel": 4
                         }
                     },
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgbw.red",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
+                            "role": "level.rgb",
+                            "type": "string",
                             "write": true,
                             "read": false
                         },
                         "native": {
-                            "dmx_channel": 1
-                        }
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.rgbw.green",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {
-                            "dmx_channel": 2
-                        }
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.rgbw.blue",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {
-                            "dmx_channel": 3
                         }
                     }
-
                 ]
             }
         },
