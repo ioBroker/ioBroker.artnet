@@ -67,7 +67,7 @@ function getRgbValues(channel, callback) {
 
 function setDelayed(options, callback) {
     if (!options.interval || options.start === null) {
-        artnet.set(adapter.config.universe, states[id].native.channel, state.val, function () {
+        artnet.set(adapter.config.universe, options.channel, options.end, function () {
             if (callback) callback();
             callback = null;
         });
