@@ -67,6 +67,7 @@ function getRgbValues(channel, callback) {
 
 function setDelayed(options, callback) {
     if (!options.interval || options.start === null) {
+        adapter.log.debug('Set direct: channel - ' + options.channel + ', value - ' + options.end);
         artnet.set(adapter.config.universe, options.channel, options.end, function () {
             if (callback) callback();
             callback = null;
@@ -124,10 +125,8 @@ var adapter = utils.adapter({
     },
 
     stateChange: function (id, state) {
-        adapter.log.debug('stateChange ' + id + ': ' + JSON.stringify(state));
-
         if (state && !state.ack && states[id].native && states[id].native.channel) {
-            console.log('artnet.set', states[id].native.channel, state.val);
+            adapter.log.debug('artnet.set', states[id].native.channel, state.val);
 
             if (states[id].common.role === 'level.rgb') {
                 var rgb = splitColor(state.val);
@@ -152,6 +151,8 @@ var adapter = utils.adapter({
                 if (state.val === 'true')  state.val = true;
                 if (state.val === 'false') state.val = false;
 
+                var originalValue = state.val;
+
                 if (states[id].native.value_off !== undefined && (state.val === false || state.val === 'false')) state.val = states[id].native.value_off;
                 if (states[id].native.value_on  !== undefined && (state.val === true  || state.val === 'true'))  state.val = states[id].native.value_on;
 
@@ -174,7 +175,7 @@ var adapter = utils.adapter({
                     end:      state.val,
                     interval: channels[channelId] ? channels[channelId].native.interval : 0
                 }, function () {
-                    adapter.setForeignState(id, {val: state.val, ack: true});
+                    adapter.setForeignState(id, {val: originalValue, ack: true});
                     values[id] = state;
 
                     var parts = id.split('.');
