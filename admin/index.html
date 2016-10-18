@@ -93,7 +93,7 @@
                     callback && callback();
                 } else {
                     var obj = _objs.pop();
-                    console.log('Add ' + objs._id);
+                    console.log('Add ' + obj._id);
                     socket.emit('setObject', obj._id, obj, function () {
                         insertObjs(_objs);
                     });

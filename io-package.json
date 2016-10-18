@@ -1,9 +1,9 @@
 {
     "common": {
         "name":                     "artnet",
-        "version":                  "0.1.2",
+        "version":                  "0.1.3",
         "news": {
-            "0.1.2": {
+            "0.1.3": {
                 "en": "add action interval",
                 "de": "Ausführungsintervall hinzugefügt",
                 "ru": "Добавлен интервал выполнения"
@@ -23,6 +23,7 @@
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "loglevel":                 "info",
+        "readme":                   "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
         "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"],
         "icon":                     "artnet.png",
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png"
