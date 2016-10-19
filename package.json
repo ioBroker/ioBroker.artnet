@@ -1,12 +1,15 @@
 {
   "name": "iobroker.artnet",
   "description": "The adapter allows to send and receive MQTT messages from ioBroker and to be a broker.",
-  "version": "0.1.4",
-  "author": "hobbyquaker <hq@ccu.io>",
+  "version": "0.1.5",
+  "author": {
+    "name": "hobbyquaker",
+    "email": "hq@ccu.io"
+  },
   "homepage": "https://github.com/ioBroker/ioBroker.artnet",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ioBroker/ioBroker.artnet"
+    "url": "git+https://github.com/ioBroker/ioBroker.artnet.git"
   },
   "licenses": [
     {
@@ -35,5 +38,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "readme": "![Logo](admin/artnet.png)\nioBroker.artnet\n===============\n[![NPM version](http://img.shields.io/npm/v/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)\n[![Downloads](https://img.shields.io/npm/dm/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)\n\n[![NPM](https://nodei.co/npm/iobroker.artnet.png?downloads=true)](https://nodei.co/npm/iobroker.artnet/)\n\nControl DMX512 Devices via an Art-Net node\n\nYou can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/avr/dmx-avr-artnetnode].\n\n## Changelog\n### 0.1.4 (2016-10-18)\n* (bluefox) add action interval\n\n### 0.1.1 (2016-10-14)\n* (bluefox) completely rewritten\n\n### 0.0.1 (2014-10-19)\n* (hobbyquaker) working on device management\n",
+  "readmeFilename": "README.md",
+  "gitHead": "45a78776ae94d40a2f81250b6c1add93ed22cd5d",
+  "_id": "iobroker.artnet@0.1.4",
+  "_shasum": "e1b1995bcbf03a1b77a200f0bd9622389373068e",
+  "_from": "iobroker.artnet@latest"
 }

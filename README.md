@@ -11,6 +11,9 @@ Control DMX512 Devices via an Art-Net node
 You can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/avr/dmx-avr-artnetnode].
 
 ## Changelog
+### 0.1.5 (2016-10-19)
+* (bluefox) Change role of RGB
+
 ### 0.1.4 (2016-10-18)
 * (bluefox) add action interval
 

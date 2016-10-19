@@ -77,8 +77,8 @@ function setDelayed(options, callback) {
 
     if (options.index === undefined) {
         options.index = 1;
-        options.stepVal  = Math.round((options.end - options.start) / 10);
-        options.stepTime = Math.round(options.interval / 10);
+        options.stepVal  = Math.round((options.end - options.start) / 30);
+        options.stepTime = Math.round(options.interval / 30);
         if (options.stepTime < 15) {
             options.stepTime = 15;
             options.stepVal  = Math.round((options.end - options.start) / (options.interval / options.stepTime));

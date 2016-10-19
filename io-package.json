@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "artnet",
-        "version":                  "0.1.4",
+        "version":                  "0.1.5",
         "news": {
+            "0.1.5": {
+                "en": "Change role of RGB",
+                "de": "Ändere Rolle von RGB",
+                "ru": "Изменена роль RGB"
+            },
             "0.1.4": {
                 "en": "add action interval",
                 "de": "Ausführungsintervall hinzugefügt",
@@ -191,7 +196,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb",
+                            "role": "light.color.rgb",
                             "type": "string",
                             "write": true,
                             "read": false
@@ -280,7 +285,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb",
+                            "role": "light.color.rgb",
                             "type": "string",
                             "write": true,
                             "read": false
