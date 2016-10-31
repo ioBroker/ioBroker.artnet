@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "artnet",
-        "version":                  "0.1.5",
+        "version":                  "0.1.6",
         "news": {
+            "0.1.6": {
+                "en": "Better dim function of RGB",
+                "de": "Bessere Dim Funktion von RGB",
+                "ru": "Улучшено диммирование RGB"
+            },
             "0.1.5": {
                 "en": "Change role of RGB",
                 "de": "Ändere Rolle von RGB",

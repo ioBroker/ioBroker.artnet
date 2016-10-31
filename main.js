@@ -66,6 +66,15 @@ function getRgbValues(channel, callback) {
 }
 
 function setDelayed(options, callback) {
+    if (options.interval && options.start === null) {
+        // try to guess the old value
+        if ((options.min !== undefined && parseInt(options.end, 10) !== parseInt(options.min, 10)) || parseInt(options.end, 10)) {
+            options.start = options.min !== undefined ? options.min : 0;
+        } else {
+            options.start = options.max !== undefined ? options.max : 255;
+        }
+    }
+
     if (!options.interval || options.start === null) {
         adapter.log.debug('Set direct: channel - ' + options.channel + ', value - ' + options.end);
         artnet.set(adapter.config.universe, options.channel, options.end, function () {
@@ -171,6 +180,8 @@ var adapter = utils.adapter({
 
                 setDelayed({
                     channel:  states[id].native.channel,
+                    min:      states[id].common.min,
+                    max:      states[id].common.max,
                     start:    oldValue,
                     end:      state.val,
                     interval: channels[channelId] ? channels[channelId].native.interval : 0
