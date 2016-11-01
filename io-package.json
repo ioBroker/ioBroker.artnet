@@ -36,6 +36,7 @@
         "readme":                   "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
         "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"],
         "icon":                     "artnet.png",
+		"type":                     "hardware",
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png"
     },
     "native": {
