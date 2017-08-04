@@ -6,6 +6,8 @@ ioBroker.artnet
 
 [![NPM](https://nodei.co/npm/iobroker.artnet.png?downloads=true)](https://nodei.co/npm/iobroker.artnet/)
 
+***This Adapter needs at least nodejs 0.12***
+
 Control DMX512 Devices via an Art-Net node
 
 You can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/avr/dmx-avr-artnetnode].
