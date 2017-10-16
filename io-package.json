@@ -1,7 +1,7 @@
 {
     "common": {
-        "name":                     "artnet",
-        "version":                  "0.1.6",
+        "name": "artnet",
+        "version": "0.1.6",
         "news": {
             "0.1.6": {
                 "en": "Better dim function of RGB",
@@ -24,20 +24,27 @@
                 "ru": "Полностью переписан"
             }
         },
-        "title":                    "Art-Net Adapter",
-        "desc":                     "Control DMX512 Devices via an Art-Net node",
+        "title": "Art-Net Adapter",
+        "desc": "Control DMX512 Devices via an Art-Net node",
         "authors": [
             "hobbyquaker <hq@ccu.io>"
         ],
-        "license":                  "MIT",
-        "platform":                 "Javascript/Node.js",
-        "mode":                     "daemon",
-        "loglevel":                 "info",
-        "readme":                   "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
-        "keywords":                 ["Art-Net", "artnet", "DMX512", "Stage Lighting", "LED", "RGB"],
-        "icon":                     "artnet.png",
-		"type":                     "hardware",
-        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png"
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "loglevel": "info",
+        "readme": "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
+        "keywords": [
+            "Art-Net",
+            "artnet",
+            "DMX512",
+            "Stage Lighting",
+            "LED",
+            "RGB"
+        ],
+        "icon": "artnet.png",
+        "type": "lighting",
+        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png"
     },
     "native": {
         "host": "172.16.23.15",
@@ -52,12 +59,8 @@
                 "adapter": "artnet",
                 "type": ""
             },
-            "common": {
-
-            },
-            "native": {
-
-            }
+            "common": {},
+            "native": {}
         },
         {
             "_id": "artnet.meta.switch",
@@ -76,9 +79,7 @@
                     "common": {
                         "role": "switch"
                     },
-                    "native": {
-
-                    }
+                    "native": {}
                 },
                 "length": 1,
                 "states": [
@@ -88,7 +89,7 @@
                             "role": "switch",
                             "type": "boolean",
                             "write": true,
-                            "read":  false
+                            "read": false
                         },
                         "native": {
                             "value_off": 0,
@@ -115,24 +116,21 @@
                     "common": {
                         "role": "light.dimmer"
                     },
-                    "native": {
-
-                    }
+                    "native": {}
                 },
                 "length": 1,
                 "states": [
                     {
                         "type": "state",
                         "common": {
-                            "role":  "level.dimmer",
-                            "type":  "number",
-                            "min":   0,
-                            "max":   255,
+                            "role": "level.dimmer",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
                             "write": true,
-                            "read":  false
+                            "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     }
                 ]
             }
@@ -154,9 +152,7 @@
                     "common": {
                         "role": "light.rgb"
                     },
-                    "native": {
-
-                    }
+                    "native": {}
                 },
                 "length": 3,
                 "states": [
@@ -170,8 +166,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -183,8 +178,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -196,8 +190,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -207,8 +200,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     }
                 ]
             }
@@ -230,9 +222,7 @@
                     "common": {
                         "role": "light.rgbw"
                     },
-                    "native": {
-
-                    }
+                    "native": {}
                 },
                 "length": 4,
                 "states": [
@@ -246,8 +236,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -259,8 +248,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -272,8 +260,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -285,8 +272,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -296,8 +282,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     }
                 ]
             }
@@ -319,9 +304,7 @@
                     "common": {
                         "role": "light.cmy"
                     },
-                    "native": {
-
-                    }
+                    "native": {}
                 },
                 "length": 4,
                 "states": [
@@ -335,8 +318,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -348,8 +330,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -361,8 +342,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     },
                     {
                         "type": "state",
@@ -374,8 +354,7 @@
                             "write": true,
                             "read": false
                         },
-                        "native": {
-                        }
+                        "native": {}
                     }
                 ]
             }
