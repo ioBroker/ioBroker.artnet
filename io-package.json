@@ -5,12 +5,12 @@
         "news": {
             "0.1.6": {
                 "en": "Better dim function of RGB",
-                "de": "Bessere Dim Funktion von RGB",
+                "de": "Dim Funktion von RGB verbessert",
                 "ru": "Улучшено диммирование RGB"
             },
             "0.1.5": {
                 "en": "Change role of RGB",
-                "de": "Ändere Rolle von RGB",
+                "de": "Rolle von RGB geändert",
                 "ru": "Изменена роль RGB"
             },
             "0.1.4": {
@@ -25,7 +25,11 @@
             }
         },
         "title": "Art-Net Adapter",
-        "desc": "Control DMX512 Devices via an Art-Net node",
+        "desc":                     {
+            "en": "Control DMX512 Devices via an Art-Net node",
+            "de": "Steuert DMX512 Geräte über einen Art-Net Node",
+            "ru": "Control DMX512 Devices via an Art-Net node"
+        },
         "authors": [
             "hobbyquaker <hq@ccu.io>"
         ],
