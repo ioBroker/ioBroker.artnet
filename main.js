@@ -116,7 +116,7 @@ function setDelayed(options, callback) {
     }
 }
 
-var adapter = utils.adapter({
+var adapter = utils.Adapter({
 
     name:           'artnet',
 
