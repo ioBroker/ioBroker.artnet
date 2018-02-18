@@ -3,6 +3,11 @@
         "name": "artnet",
         "version": "0.1.6",
         "news": {
+            "0.1.7": {
+                "en": "added CCT fixtures",
+                "de": "CCT Leuchten hinzugefügt",
+                "ru": "+ CCT"
+            },
             "0.1.6": {
                 "en": "Better dim function of RGB",
                 "de": "Dim Funktion von RGB verbessert",
@@ -352,6 +357,78 @@
                         "type": "state",
                         "common": {
                             "role": "level.cmy.yellow",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {}
+                    }
+                ]
+            }
+        }
+        {
+            "_id": "artnet.meta.cct",
+            "type": "meta",
+            "parent": "artnet.meta",
+            "meta": {
+                "adapter": "artnet",
+                "type": "fixture"
+            },
+            "common": {
+                "name": "generic cct"
+            },
+            "native": {
+                "channel": {
+                    "type": "channel",
+                    "common": {
+                        "role": "light.cct"
+                    },
+                    "native": {}
+                },
+                "length": 4,
+                "states": [
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.dimmer",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {}
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.cct.cct",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {}
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.cct.saturation",
+                            "type": "number",
+                            "min": 0,
+                            "max": 255,
+                            "write": true,
+                            "read": false
+                        },
+                        "native": {}
+                    },
+                    {
+                        "type": "state",
+                        "common": {
+                            "role": "level.cct.hue",
                             "type": "number",
                             "min": 0,
                             "max": 255,
