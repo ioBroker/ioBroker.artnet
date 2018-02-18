@@ -1,0 +1,383 @@
+<html>
+<head>
+    <!-- Materialze style -->
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <script type="text/javascript" src="words.js"></script>
+
+<style>
+    #grid-devices tr:nth-child(even) {
+        background: lightgray;
+    }
+    .m .select-wrapper+label {
+        top: 100%;
+    }
+    .grid-table {
+        height: calc(100% - 110px);
+        overflow: auto;
+    }
+    .m .select-wrapper input.select-dropdown {
+        height: 1.5rem;
+        line-height: 1.5rem;
+    }
+    .m td, .m th {
+        padding: 2px 5px;
+    }
+</style>
+<script type="text/javascript">
+    var onChange;
+    var objects = {};
+
+    function addDevice(name, firstAddress, fixture, callback) {
+        if (typeof name === 'object') {
+            if (!name || !name.length) {
+                if (callback) callback();
+                return;
+            }
+            var _name = name.shift();
+            addDevice(_name, firstAddress, fixture, function () {
+                addDevice(name, firstAddress + fixture.native.length, fixture, callback);
+            });
+        } else {
+            var deviceObj = JSON.parse(JSON.stringify(fixture.native.channel));
+            var deviceId = 'artnet.' + instance + '.' + fixture._id.split('.').pop() + '.' + firstAddress;
+
+            deviceObj._id = deviceId;
+
+            deviceObj.common.name     = name || deviceId;
+            deviceObj.native.address  = firstAddress;
+            deviceObj.native.length   = fixture.native.length;
+            deviceObj.native.interval = 0;
+
+            var objs = JSON.parse(JSON.stringify(fixture.native.states));
+
+            showDevice(deviceObj);
+
+            for (var i = 0; i < objs.length; i++) {
+                var dpType = objs[i].common.role.split('.').pop();
+
+                var id = deviceId + '.' + dpType;
+                objs[i].common.name    = name ? name + ' ' + dpType : id;
+                objs[i].parent         = deviceId;
+                objs[i]._id            = id;
+                objs[i].native.channel = firstAddress++;
+            }
+            objs.push(deviceObj);
+
+            function insertObjs(_objs) {
+                if (!_objs || !_objs.length) {
+                    console.log('done ' + deviceId);
+                    callback && callback();
+                } else {
+                    var obj = _objs.pop();
+                    console.log('Add ' + obj._id);
+                    socket.emit('setObject', obj._id, obj, function () {
+                        insertObjs(_objs);
+                    });
+                }
+            }
+
+            insertObjs(objs);
+        }
+    }
+    
+    function load(settings, _onChange) {
+        onChange = _onChange;
+        for (var key in settings) {
+            if (!settings.hasOwnProperty(key)) continue;
+
+            var $value = $('#' + key + '.value');
+            if ($value.attr('type') === 'checkbox') {
+                $value.prop('checked', settings[key]).change(function() {
+                    onChange();
+                });
+            } else {
+                $value.val(settings[key]).change(function() {
+                    onChange();
+                }).keyup(function () {
+                    $(this).trigger('change');
+                })
+            }
+        }
+        onChange(false);
+
+        var fixtures = {};
+
+        socket.emit('getObjectView', 'system', 'meta', {startkey: 'artnet.meta.', endkey: 'artnet.meta.\u9999', include_docs: true}, function (err, res) {
+            var $fixture = $('#fixture');
+            for (var i = res.rows.length - 1; i >= 0; i--) {
+                var row = res.rows[i];
+                fixtures[row.id] = row.value;
+                $fixture.append('<option value="' + row.id + '">' + _(row.value.native.channel.common.role) + '</option>');
+            }
+            $fixture.select();
+        });
+
+        $('#dialog-fixture').find('#add_device').off('click').on('click', function () {
+            var name         = $('#name').val();
+            var firstAddress = parseInt($('#first-address').val(), 10);
+            var fixture      = fixtures[$('#fixture').val()];
+            var count        = parseInt($('#fixture-count').val(), 10);
+
+            if (count === 1) {
+                addDevice(name, firstAddress, fixture);
+                //onChange();
+            } else {
+                var names = [];
+                for (var i = 0; i < count; i++) {
+                    names.push(name + ' ' + (i + 1));
+                }
+
+                addDevice(names, firstAddress, fixture);
+                //onChange();
+            }
+        });
+
+        $('#add').off('click').on('click', function () {
+            // find next free address
+            var max = 1;
+            $('.device').each(function () {
+                var id = $(this).data('channel');
+                if (objects[id].native.address + objects[id].native.length > max) {
+                    max = objects[id].native.address + objects[id].native.length;
+                }
+            });
+
+            $('#fixture-count').val(1);
+            $('#first-address').val(max);
+            $('#dialog-fixture').modal().modal('open');
+        });
+
+        socket.emit('getObjectView', 'system', 'channel', {startkey: 'artnet.' + instance + '.', endkey: 'artnet.' + instance + '.\u9999', include_docs: true}, function (err, res) {
+            res.rows.sort(function (a, b) {
+                if (a.value.native.address > b.value.native.address) return 1;
+                if (a.value.native.address < b.value.native.address) return -1;
+                return 0;
+            });
+
+            for (var i = 0; i < res.rows.length; i++) {
+                showDevice(res.rows[i].value);
+            }
+        });
+    }
+
+    function save(callback) {
+        var obj = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            var id = $this.attr('id');
+
+            if ($this.attr('type') === 'checkbox') {
+                obj[id] = $this.prop('checked');
+            } else {
+                obj[id] = $this.val();
+            }
+        });
+        callback(obj);
+    }
+
+    function deleteState(id) {
+        socket.emit('delObject', id, function (err) {
+            socket.emit('delState', id, function (err) {
+
+            });
+        });
+    }
+
+    function showDevice(obj) {
+        objects[obj._id] = obj;
+        var text = '';
+        text += '<tr class="device" data-channel="' + obj._id + '">';
+        text += '<td style="text-align: left;   width: 150px">' + obj.common.name + '</td>';
+        text += '<td style="text-align: center; width: 100px">' + obj.native.address + '</td>';
+        text += '<td style="text-align: center; width: 100px">' + _(obj.common.role) + '</td>';
+        text += '<td style="text-align: center; width: 100px"><select class="interval" data-id="' + obj._id + '">' +
+                '<option value="0" class="translate">none</option>' +
+                '<option value="100">100ms</option>' +
+                '<option value="200">200ms</option>' +
+                '<option value="300">300ms</option>' +
+                '<option value="400">400ms</option>' +
+                '<option value="500">500ms</option>' +
+                '<option value="600">600ms</option>' +
+                '<option value="700">700ms</option>' +
+                '<option value="800">800ms</option>' +
+                '<option value="900">900ms</option>' +
+                '<option value="1000">1s</option>' +
+                '<option value="1100">1s 100ms</option>' +
+                '<option value="1200">1s 200ms</option>' +
+                '<option value="1300">1s 300ms</option>' +
+                '<option value="1400">1s 400ms</option>' +
+                '<option value="1500">1s 500ms</option>' +
+                '<option value="1600">1s 600ms</option>' +
+                '<option value="1700">1s 700ms</option>' +
+                '<option value="1800">1s 800ms</option>' +
+                '<option value="1900">1s 900ms</option>' +
+                '<option value="2000">2s</option>' +
+                '<option value="2500">2.5s</option>' +
+                '<option value="3000">3s</option>' +
+                '<option value="3500">3.5s</option>' +
+                '<option value="4000">4s</option>' +
+                '<option value="4500">4.5s</option>' +
+                '<option value="5500">5.5s</option>' +
+                '<option value="6000">6s</option>' +
+                '<option value="7000">7s</option>' +
+                '<option value="8000">8s</option>' +
+                '<option value="9000">9s</option>' +
+                '<option value="10000">10s</option>' +
+                '<option value="12000">12s</option>' +
+                '<option value="15000">15s</option>' +
+                '<option value="17000">17s</option>' +
+                '<option value="20000">20s</option>' +
+                '<option value="25000">25s</option>' +
+                '<option value="30000">30s</option>' +
+                '</select></td>';
+        text += '<td style="text-align: center"><a class="btn-floating waves-effect waves-light red del" data-id="' + obj._id + '"><i class="material-icons">delete</i></a></td>';
+        text += '</tr>';
+
+        var $gridDevices = $('#grid-devices');
+
+        $gridDevices.append(text);
+
+        $gridDevices.find('a[data-id="' + obj._id + '"]').off('click').on('click', function () {
+            var id = $(this).data('id');
+            confirmMessage(_('Are you sure?'), _('Please confirm'), null, function (result) {
+                if (result) {
+                    socket.emit('delObject', id, function () {
+                        socket.emit('getObjectView', 'system', 'state', {startkey: id + '.', endkey: id + '.\u9999', include_docs: true}, function (err, res) {
+                            for (var i = 0; i < res.rows.length; i++) {
+                                deleteState(res.rows[i].id);
+                            }
+                            $('tr[data-channel="' + id + '"]').remove();
+                            delete objects[id];
+                            //onChange();
+                        });
+                    });
+                }
+            });
+        });
+
+        $gridDevices.find('.interval[data-id="' + obj._id + '"]').on('change', function () {
+            var $this = $(this);
+            var id = $this.data('id');
+            objects[id].native.interval = parseInt($this.val(), 10);
+            $(this).prop('disabled', true);
+
+            socket.emit('setObject', id, objects[id], function () {
+                $this.prop('disabled', false);
+            });
+        }).val(obj.native.interval || 0).select();
+    }
+
+</script>
+</head>
+<body>
+<div class="m adapter-container">
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s2"><a href="#tab-main"    class="translate active">Art-Net node</a></li>
+                <li class="tab col s2"><a href="#tab-devices" class="translate">DMX512 devices</a></li>
+            </ul>
+        </div>
+        <div id="tab-main"    class="col s12 page">
+            <div class="row">
+                <div class="col s12 m4 l2">
+                    <img src="artnet.png" class="logo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m8">
+                    <input class="value" type="text" id="host">
+                    <label class="translate" for="host">Host</label>
+                </div>
+                <div class="col s12 m4">
+                    <input class="value" type="number" min="1" max="65565" id="port">
+                    <label class="translate" for="port">Port</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m4">
+                    <input class="value" type="number" min="0" max="512" id="universe">
+                    <label class="translate" for="universe">DMX Universe</label>
+                </div>
+            </div>
+        </div>
+        <div id="tab-devices" class="col s12 page">
+            <div class="row">
+                <div class="col s1">
+                    <a class="btn-floating btn-large waves-effect waves-light blue" id="add"><i class="material-icons">add</i></a>
+                </div>
+                <div class="col s11">
+                    <p class="translate">help</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 grid-table">
+                    <table style="width: 100%">
+                        <thead>
+                        <tr class="ui-widget-header">
+                            <td style="width: 50%;  text-align: left"   class="translate">Name</td>
+                            <td style="width: 40px; text-align: center" class="translate">Address</td>
+                            <td style="width: 20%;  text-align: center" class="translate">Type</td>
+                            <td style="width: 80px; text-align: center" class="translate">Interval</td>
+                            <td style="width: 60px; text-align: center" class="translate"></td>
+                        </tr>
+                        </thead>
+                        <tbody id="grid-devices">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m material-dialogs">
+    <div id="dialog-fixture" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12">
+                    <h6 class="translate">choose fixture</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <input id="name" type="text">
+                    <label class="translate" for="name">Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <select id="fixture"></select>
+                    <label class="translate" for="fixture">Fixture</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <input id="fixture-count" type="number"/>
+                    <label class="translate" for="fixture-count">Count</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <input id="first-address" type="number"/>
+                    <label class="translate" for="first-address">First address</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat translate" id="add_device">Add device</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat translate" id="cancel_device">Cancel</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

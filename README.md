@@ -1,20 +1,20 @@
 ![Logo](admin/artnet.png)
-ioBroker.artnet
+# ioBroker.artnet
 ===============
+
 [![NPM version](http://img.shields.io/npm/v/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)
 
 [![NPM](https://nodei.co/npm/iobroker.artnet.png?downloads=true)](https://nodei.co/npm/iobroker.artnet/)
 
-***This Adapter needs at least nodejs 0.12***
-
-Control DMX512 Devices via an Art-Net node
+Control DMX512 Devices via an Art-Net node.
 
 You can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/avr/dmx-avr-artnetnode].
 
 ## Changelog
-### 0.1.7 (2018-02-18)
+### 1.0.0 (2018-02-18)
 * (1704eu) added cct fixtures
+* (bluefox) Admin3 ready
 
 ### 0.1.6 (2016-10-31)
 * (bluefox) Better dim function of RGB

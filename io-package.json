@@ -1,12 +1,18 @@
 {
     "common": {
         "name": "artnet",
-        "version": "0.1.6",
+        "version": "1.0.0",
         "news": {
-            "0.1.7": {
-                "en": "added CCT fixtures",
-                "de": "CCT Leuchten hinzugefügt",
-                "ru": "+ CCT"
+            "1.0.0": {
+                "en": "CCT fixtures were added",
+                "de": "CCT Fixtures wurden hinzugefügt",
+                "ru": "Добавлены приборы CCT",
+                "pt": "Instalações CCT foram adicionadas",
+                "nl": "CCT-armaturen zijn toegevoegd",
+                "fr": "Les appareils CCT ont été ajoutés",
+                "it": "Sono stati aggiunti i dispositivi CCT",
+                "es": "Se agregaron accesorios CCT",
+                "pl": "Dodano urządzenia CCT"
             },
             "0.1.6": {
                 "en": "Better dim function of RGB",
@@ -29,11 +35,17 @@
                 "ru": "Полностью переписан"
             }
         },
-        "title": "Art-Net Adapter",
+        "title": "Art-Net",
         "desc":                     {
             "en": "Control DMX512 Devices via an Art-Net node",
             "de": "Steuert DMX512 Geräte über einen Art-Net Node",
-            "ru": "Управляет DMX512 устройствами через Art-Net"
+            "ru": "Управляет DMX512 устройствами через Art-Net",
+            "pt": "Controlar dispositivos DMX512 através de um nó Art-Net",
+            "nl": "Bedien DMX512-apparaten via een Art-Net-knooppunt",
+            "fr": "Contrôler les appareils DMX512 via un noeud Art-Net",
+            "it": "Controlla i dispositivi DMX512 tramite un nodo Art-Net",
+            "es": "Controle los dispositivos DMX512 a través de un nodo Art-Net",
+            "pl": "Steruj urządzeniami DMX512 za pośrednictwem węzła Art-Net"
         },
         "authors": [
             "hobbyquaker <hq@ccu.io>"
@@ -41,12 +53,14 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "mode": "daemon",
+        "materialize": true,
         "loglevel": "info",
         "readme": "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
         "keywords": [
             "Art-Net",
             "artnet",
             "DMX512",
+            "IoT",
             "Stage Lighting",
             "LED",
             "RGB"
@@ -367,7 +381,7 @@
                     }
                 ]
             }
-        }
+        },
         {
             "_id": "artnet.meta.cct",
             "type": "meta",
