@@ -2,7 +2,7 @@
 # ioBroker.artnet
 ===============
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)
+![Number of Installations](http://iobroker.live/badges/artnet-installed.svg) ![Number of Installations](http://iobroker.live/badges/artnet-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.artnet.svg)](https://www.npmjs.com/package/iobroker.artnet)
 
 [![NPM](https://nodei.co/npm/iobroker.artnet.png?downloads=true)](https://nodei.co/npm/iobroker.artnet/)
