@@ -406,7 +406,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.dimmer",
+                            "role": "level.cct.dimmer",
                             "type": "number",
                             "min": 0,
                             "max": 255,
