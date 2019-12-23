@@ -222,8 +222,8 @@ var adapter = utils.Adapter({
         adapter.subscribeStates('*');
         adapter.subscribeObjects('*');
 
-        adapter.objects.getObjectView('system', 'state', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, res) {
-            adapter.objects.getObjectView('system', 'channel', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, _channels) {
+        adapter.getObjectView('system', 'state', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, res) {
+            adapter.getObjectView('system', 'channel', {startkey: adapter.namespace + '.', endkey: adapter.namespace + '.\u9999', include_docs: true}, function (err, _channels) {
                 if (_channels) {
                     for (var i = _channels.rows.length - 1; i >= 0; i--) {
                         channels[_channels.rows[i].id] = _channels.rows[i].value;
