@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "artnet",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "news": {
+            "1.1.0": {
+                "en": "we no longer use adapter.objects directly",
+                "de": "Wir verwenden adapter.objects nicht mehr direkt",
+                "ru": "мы больше не используем адаптер.объекты напрямую",
+                "pt": "não usamos mais o adapter.objects diretamente",
+                "nl": "we gebruiken adapter.objects niet langer rechtstreeks",
+                "fr": "nous n'utilisons plus directement adapter.objects",
+                "it": "non utilizziamo più adapter.objects direttamente",
+                "es": "ya no usamos adaptador.objetos directamente",
+                "pl": "nie używamy już bezpośrednio adapter.objects",
+                "zh-cn": "我们不再直接使用adapter.objects"
+            },
             "1.0.0": {
                 "en": "CCT fixtures were added",
                 "de": "CCT Fixtures wurden hinzugefügt",
@@ -67,7 +79,12 @@
         ],
         "icon": "artnet.png",
         "type": "lighting",
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png"
+        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png",
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
     },
     "native": {
         "host": "172.16.23.15",
