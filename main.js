@@ -217,7 +217,7 @@ var adapter = utils.Adapter({
     ready: function () {
         adapter.config.universe = parseInt(adapter.config.universe, 10) || 0;
 
-        artnet = require('artnet')({host: adapter.config.host, port: parseInt(adapter.config.port, 10) || 6454});
+        artnet = require('artnet')({host: adapter.config.host, port: parseInt(adapter.config.port, 10) || 6454, sendAll: true});
 
         adapter.subscribeStates('*');
         adapter.subscribeObjects('*');
