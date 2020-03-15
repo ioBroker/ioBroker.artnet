@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "artnet",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "news": {
+            "1.1.1": {
+                "en": "Fixed delays between commands",
+                "de": "Fix Verzögerungen zwischen den Teams",
+                "ru": "исправили задержки между командами",
+                "pt": "fixaram o atraso entre os comandos",
+                "nl": "vaste vertragingen tussen commando ' s",
+                "fr": "correction des retards entre les commandes",
+                "it": "risolto il ritardo tra i comandi",
+                "es": "corrige retrasos entre equipos",
+                "pl": "Poprawiono opóźnienia między zespołami",
+                "zh-cn": "命令之间的固定延迟"
+            },
             "1.1.0": {
                 "en": "we no longer use adapter.objects directly",
                 "de": "Wir verwenden adapter.objects nicht mehr direkt",
