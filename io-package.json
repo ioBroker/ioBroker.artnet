@@ -211,7 +211,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb.red",
+                            "role": "level.color.red",
                             "type": "number",
                             "min": 0,
                             "max": 255,
@@ -223,7 +223,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb.green",
+                            "role": "level.color.green",
                             "type": "number",
                             "min": 0,
                             "max": 255,
@@ -235,7 +235,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "level.rgb.blue",
+                            "role": "level.color.blue",
                             "type": "number",
                             "min": 0,
                             "max": 255,
@@ -247,7 +247,7 @@
                     {
                         "type": "state",
                         "common": {
-                            "role": "light.color.rgb",
+                            "role": "level.color.rgb",
                             "type": "string",
                             "write": true,
                             "read": false
