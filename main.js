@@ -137,7 +137,7 @@ var adapter = utils.Adapter({
         if (state && !state.ack && states[id].native && states[id].native.channel) {
             adapter.log.debug('artnet.set', states[id].native.channel, state.val);
 
-            if (states[id].common.role === 'level.rgb') {
+            if (states[id].common.role === 'light.color.rgb') {
                 var rgb = splitColor(state.val);
                 var parts = id.split('.');
                 parts.pop();
