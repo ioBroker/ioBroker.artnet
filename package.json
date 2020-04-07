@@ -1,7 +1,7 @@
 {
   "name": "iobroker.artnet",
   "description": "The adapter allows to send and receive MQTT messages from ioBroker and to be a broker.",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "author": {
     "name": "hobbyquaker",
     "email": "hq@ccu.io"
@@ -24,13 +24,13 @@
   ],
   "dependencies": {
     "artnet": "^1.4.0",
-    "@iobroker/adapter-core": "^2.0.0"
+    "@iobroker/adapter-core": "^2.2.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "mocha": "^6.0.2",
-    "chai": "^4.1.2",
-    "@iobroker/testing": "^2.0.0"
+    "gulp": "^4.0.2",
+    "mocha": "^7.1.1",
+    "chai": "^4.2.0",
+    "@iobroker/testing": "^2.1.0"
   },
   "bugs": {
     "url": "https://github.com/ioBroker/ioBroker.artnet/issues"

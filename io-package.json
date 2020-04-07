@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "artnet",
-        "version": "1.1.1",
+        "version": "1.2.0",
         "news": {
+            "1.2.0": {
+                "en": "Support of compact mode",
+                "de": "Unterstützung des Kompaktmodus",
+                "ru": "Поддержка компактного режима",
+                "pt": "Suporte do modo compacto",
+                "nl": "Ondersteuning van compacte modus",
+                "fr": "Prise en charge du mode compact",
+                "it": "Supporto della modalità compatta",
+                "es": "Soporte de modo compacto.",
+                "pl": "Obsługa trybu kompaktowego",
+                "zh-cn": "支持紧凑模式"
+            },
             "1.1.1": {
                 "en": "Fixed delays between commands",
                 "de": "Fix Verzögerungen zwischen den Teams",
@@ -37,29 +49,9 @@
                 "it": "Sono stati aggiunti i dispositivi CCT",
                 "es": "Se agregaron accesorios CCT",
                 "pl": "Dodano urządzenia CCT"
-            },
-            "0.1.6": {
-                "en": "Better dim function of RGB",
-                "de": "Dim Funktion von RGB verbessert",
-                "ru": "Улучшено диммирование RGB"
-            },
-            "0.1.5": {
-                "en": "Change role of RGB",
-                "de": "Rolle von RGB geändert",
-                "ru": "Изменена роль RGB"
-            },
-            "0.1.4": {
-                "en": "add action interval",
-                "de": "Ausführungsintervall hinzugefügt",
-                "ru": "Добавлен интервал выполнения"
-            },
-            "0.1.1": {
-                "en": "completely rewritten",
-                "de": "Überarbeitet",
-                "ru": "Полностью переписан"
             }
         },
-        "title": "Art-Net",
+        "title": "DMX512 Art-Net",
         "desc":                     {
             "en": "Control DMX512 Devices via an Art-Net node",
             "de": "Steuert DMX512 Geräte über einen Art-Net Node",
@@ -69,7 +61,8 @@
             "fr": "Contrôler les appareils DMX512 via un noeud Art-Net",
             "it": "Controlla i dispositivi DMX512 tramite un nodo Art-Net",
             "es": "Controle los dispositivos DMX512 a través de un nodo Art-Net",
-            "pl": "Steruj urządzeniami DMX512 za pośrednictwem węzła Art-Net"
+            "pl": "Steruj urządzeniami DMX512 za pośrednictwem węzła Art-Net",
+            "zh-cn": "通过Art-Net节点控制DMX512设备"
         },
         "authors": [
             "hobbyquaker <hq@ccu.io>"
@@ -78,6 +71,7 @@
         "platform": "Javascript/Node.js",
         "mode": "daemon",
         "materialize": true,
+        "compact": true,
         "loglevel": "info",
         "readme": "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
         "keywords": [
