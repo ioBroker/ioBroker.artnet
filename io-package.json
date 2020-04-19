@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "artnet",
-        "version": "1.2.0",
+        "version": "1.2.2",
         "news": {
-            "1.2.0": {
+            "1.2.2": {
                 "en": "Support of compact mode",
                 "de": "Unterstützung des Kompaktmodus",
                 "ru": "Поддержка компактного режима",
