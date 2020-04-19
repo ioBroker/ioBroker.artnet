@@ -1,7 +1,7 @@
 {
   "name": "iobroker.artnet",
   "description": "The adapter allows to send and receive MQTT messages from ioBroker and to be a broker.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": {
     "name": "hobbyquaker",
     "email": "hq@ccu.io"
