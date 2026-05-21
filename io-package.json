@@ -1,481 +1,481 @@
 {
-    "common": {
-        "name": "artnet",
-        "version": "1.2.2",
-        "news": {
-            "1.2.2": {
-                "en": "Support of compact mode",
-                "de": "Unterstützung des Kompaktmodus",
-                "ru": "Поддержка компактного режима",
-                "pt": "Suporte do modo compacto",
-                "nl": "Ondersteuning van compacte modus",
-                "fr": "Prise en charge du mode compact",
-                "it": "Supporto della modalità compatta",
-                "es": "Soporte de modo compacto.",
-                "pl": "Obsługa trybu kompaktowego",
-                "zh-cn": "支持紧凑模式"
-            },
-            "1.1.1": {
-                "en": "Fixed delays between commands",
-                "de": "Fix Verzögerungen zwischen den Teams",
-                "ru": "исправили задержки между командами",
-                "pt": "fixaram o atraso entre os comandos",
-                "nl": "vaste vertragingen tussen commando ' s",
-                "fr": "correction des retards entre les commandes",
-                "it": "risolto il ritardo tra i comandi",
-                "es": "corrige retrasos entre equipos",
-                "pl": "Poprawiono opóźnienia między zespołami",
-                "zh-cn": "命令之间的固定延迟"
-            },
-            "1.1.0": {
-                "en": "we no longer use adapter.objects directly",
-                "de": "Wir verwenden adapter.objects nicht mehr direkt",
-                "ru": "мы больше не используем адаптер.объекты напрямую",
-                "pt": "não usamos mais o adapter.objects diretamente",
-                "nl": "we gebruiken adapter.objects niet langer rechtstreeks",
-                "fr": "nous n'utilisons plus directement adapter.objects",
-                "it": "non utilizziamo più adapter.objects direttamente",
-                "es": "ya no usamos adaptador.objetos directamente",
-                "pl": "nie używamy już bezpośrednio adapter.objects",
-                "zh-cn": "我们不再直接使用adapter.objects"
-            },
-            "1.0.0": {
-                "en": "CCT fixtures were added",
-                "de": "CCT Fixtures wurden hinzugefügt",
-                "ru": "Добавлены приборы CCT",
-                "pt": "Instalações CCT foram adicionadas",
-                "nl": "CCT-armaturen zijn toegevoegd",
-                "fr": "Les appareils CCT ont été ajoutés",
-                "it": "Sono stati aggiunti i dispositivi CCT",
-                "es": "Se agregaron accesorios CCT",
-                "pl": "Dodano urządzenia CCT"
-            }
-        },
-        "title": "DMX512 Art-Net",
-        "desc":                     {
-            "en": "Control DMX512 Devices via an Art-Net node",
-            "de": "Steuert DMX512 Geräte über einen Art-Net Node",
-            "ru": "Управляет DMX512 устройствами через Art-Net",
-            "pt": "Controlar dispositivos DMX512 através de um nó Art-Net",
-            "nl": "Bedien DMX512-apparaten via een Art-Net-knooppunt",
-            "fr": "Contrôler les appareils DMX512 via un noeud Art-Net",
-            "it": "Controlla i dispositivi DMX512 tramite un nodo Art-Net",
-            "es": "Controle los dispositivos DMX512 a través de un nodo Art-Net",
-            "pl": "Steruj urządzeniami DMX512 za pośrednictwem węzła Art-Net",
-            "zh-cn": "通过Art-Net节点控制DMX512设备"
-        },
-        "authors": [
-            "hobbyquaker <hq@ccu.io>"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "materialize": true,
-        "compact": true,
-        "loglevel": "info",
-        "readme": "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
-        "keywords": [
-            "Art-Net",
-            "artnet",
-            "DMX512",
-            "IoT",
-            "Stage Lighting",
-            "LED",
-            "RGB"
-        ],
-        "icon": "artnet.png",
-        "type": "lighting",
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png",
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ]
+  "common": {
+    "name": "artnet",
+    "version": "1.2.2",
+    "news": {
+      "1.2.2": {
+        "en": "Support of compact mode",
+        "de": "Unterstützung des Kompaktmodus",
+        "ru": "Поддержка компактного режима",
+        "pt": "Suporte do modo compacto",
+        "nl": "Ondersteuning van compacte modus",
+        "fr": "Prise en charge du mode compact",
+        "it": "Supporto della modalità compatta",
+        "es": "Soporte de modo compacto.",
+        "pl": "Obsługa trybu kompaktowego",
+        "zh-cn": "支持紧凑模式"
+      },
+      "1.1.1": {
+        "en": "Fixed delays between commands",
+        "de": "Fix Verzögerungen zwischen den Teams",
+        "ru": "исправили задержки между командами",
+        "pt": "fixaram o atraso entre os comandos",
+        "nl": "vaste vertragingen tussen commando ' s",
+        "fr": "correction des retards entre les commandes",
+        "it": "risolto il ritardo tra i comandi",
+        "es": "corrige retrasos entre equipos",
+        "pl": "Poprawiono opóźnienia między zespołami",
+        "zh-cn": "命令之间的固定延迟"
+      },
+      "1.1.0": {
+        "en": "we no longer use adapter.objects directly",
+        "de": "Wir verwenden adapter.objects nicht mehr direkt",
+        "ru": "мы больше не используем адаптер.объекты напрямую",
+        "pt": "não usamos mais o adapter.objects diretamente",
+        "nl": "we gebruiken adapter.objects niet langer rechtstreeks",
+        "fr": "nous n'utilisons plus directement adapter.objects",
+        "it": "non utilizziamo più adapter.objects direttamente",
+        "es": "ya no usamos adaptador.objetos directamente",
+        "pl": "nie używamy już bezpośrednio adapter.objects",
+        "zh-cn": "我们不再直接使用adapter.objects"
+      },
+      "1.0.0": {
+        "en": "CCT fixtures were added",
+        "de": "CCT Fixtures wurden hinzugefügt",
+        "ru": "Добавлены приборы CCT",
+        "pt": "Instalações CCT foram adicionadas",
+        "nl": "CCT-armaturen zijn toegevoegd",
+        "fr": "Les appareils CCT ont été ajoutés",
+        "it": "Sono stati aggiunti i dispositivi CCT",
+        "es": "Se agregaron accesorios CCT",
+        "pl": "Dodano urządzenia CCT"
+      }
     },
-    "native": {
-        "host": "172.16.23.15",
-        "port": 6454,
-        "universe": 0
+    "title": "DMX512 Art-Net",
+    "desc": {
+      "en": "Control DMX512 Devices via an Art-Net node",
+      "de": "Steuert DMX512 Geräte über einen Art-Net Node",
+      "ru": "Управляет DMX512 устройствами через Art-Net",
+      "pt": "Controlar dispositivos DMX512 através de um nó Art-Net",
+      "nl": "Bedien DMX512-apparaten via een Art-Net-knooppunt",
+      "fr": "Contrôler les appareils DMX512 via un noeud Art-Net",
+      "it": "Controlla i dispositivi DMX512 tramite un nodo Art-Net",
+      "es": "Controle los dispositivos DMX512 a través de un nodo Art-Net",
+      "pl": "Steruj urządzeniami DMX512 za pośrednictwem węzła Art-Net",
+      "zh-cn": "通过Art-Net节点控制DMX512设备"
     },
-    "objects": [
-        {
-            "_id": "artnet.meta",
-            "type": "meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": ""
-            },
-            "common": {},
-            "native": {}
-        },
-        {
-            "_id": "artnet.meta.switch",
-            "type": "meta",
-            "parent": "artnet.meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": "fixture"
-            },
-            "common": {
-                "name": "generic switch"
-            },
-            "native": {
-                "channel": {
-                    "type": "channel",
-                    "common": {
-                        "role": "switch"
-                    },
-                    "native": {}
-                },
-                "length": 1,
-                "states": [
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "switch",
-                            "type": "boolean",
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {
-                            "value_off": 0,
-                            "value_on": 255
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "artnet.meta.dimmer",
-            "type": "meta",
-            "parent": "artnet.meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": "fixture"
-            },
-            "common": {
-                "name": "generic dimmer"
-            },
-            "native": {
-                "channel": {
-                    "type": "channel",
-                    "common": {
-                        "role": "light.dimmer"
-                    },
-                    "native": {}
-                },
-                "length": 1,
-                "states": [
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.dimmer",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "artnet.meta.rgb",
-            "type": "meta",
-            "parent": "artnet.meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": "fixture"
-            },
-            "common": {
-                "name": "generic rgb"
-            },
-            "native": {
-                "channel": {
-                    "type": "channel",
-                    "common": {
-                        "role": "light.rgb"
-                    },
-                    "native": {}
-                },
-                "length": 3,
-                "states": [
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.color.red",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.color.green",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.color.blue",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.color.rgb",
-                            "type": "string",
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "artnet.meta.rgbw",
-            "type": "meta",
-            "parent": "artnet.meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": "fixture"
-            },
-            "common": {
-                "name": "generic rgbw"
-            },
-            "native": {
-                "channel": {
-                    "type": "channel",
-                    "common": {
-                        "role": "light.rgbw"
-                    },
-                    "native": {}
-                },
-                "length": 4,
-                "states": [
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.rgbw.red",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.rgbw.green",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.rgbw.blue",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.rgbw.white",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "light.color.rgb",
-                            "type": "string",
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "artnet.meta.cmy",
-            "type": "meta",
-            "parent": "artnet.meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": "fixture"
-            },
-            "common": {
-                "name": "generic cmy"
-            },
-            "native": {
-                "channel": {
-                    "type": "channel",
-                    "common": {
-                        "role": "light.cmy"
-                    },
-                    "native": {}
-                },
-                "length": 4,
-                "states": [
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.dimmer",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.cmy.cyan",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.cmy.magenta",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.cmy.yellow",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    }
-                ]
-            }
-        },
-        {
-            "_id": "artnet.meta.cct",
-            "type": "meta",
-            "parent": "artnet.meta",
-            "meta": {
-                "adapter": "artnet",
-                "type": "fixture"
-            },
-            "common": {
-                "name": "generic cct"
-            },
-            "native": {
-                "channel": {
-                    "type": "channel",
-                    "common": {
-                        "role": "light.cct"
-                    },
-                    "native": {}
-                },
-                "length": 4,
-                "states": [
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.dimmer",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.cct.cct",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.cct.saturation",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    },
-                    {
-                        "type": "state",
-                        "common": {
-                            "role": "level.cct.hue",
-                            "type": "number",
-                            "min": 0,
-                            "max": 255,
-                            "write": true,
-                            "read": false
-                        },
-                        "native": {}
-                    }
-                ]
-            }
-        }
+    "authors": [
+      "hobbyquaker <hq@ccu.io>"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "materialize": true,
+    "compact": true,
+    "loglevel": "info",
+    "readme": "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
+    "keywords": [
+      "Art-Net",
+      "artnet",
+      "DMX512",
+      "IoT",
+      "Stage Lighting",
+      "LED",
+      "RGB"
+    ],
+    "icon": "artnet.png",
+    "type": "lighting",
+    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.artnet/master/admin/artnet.png",
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
     ]
+  },
+  "native": {
+    "host": "172.16.23.15",
+    "port": 6454,
+    "universe": 0
+  },
+  "objects": [
+    {
+      "_id": "artnet.meta",
+      "type": "meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": ""
+      },
+      "common": {},
+      "native": {}
+    },
+    {
+      "_id": "artnet.meta.switch",
+      "type": "meta",
+      "parent": "artnet.meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": "fixture"
+      },
+      "common": {
+        "name": "generic switch"
+      },
+      "native": {
+        "channel": {
+          "type": "channel",
+          "common": {
+            "role": "switch"
+          },
+          "native": {}
+        },
+        "length": 1,
+        "states": [
+          {
+            "type": "state",
+            "common": {
+              "role": "switch",
+              "type": "boolean",
+              "write": true,
+              "read": false
+            },
+            "native": {
+              "value_off": 0,
+              "value_on": 255
+            }
+          }
+        ]
+      }
+    },
+    {
+      "_id": "artnet.meta.dimmer",
+      "type": "meta",
+      "parent": "artnet.meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": "fixture"
+      },
+      "common": {
+        "name": "generic dimmer"
+      },
+      "native": {
+        "channel": {
+          "type": "channel",
+          "common": {
+            "role": "light.dimmer"
+          },
+          "native": {}
+        },
+        "length": 1,
+        "states": [
+          {
+            "type": "state",
+            "common": {
+              "role": "level.dimmer",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          }
+        ]
+      }
+    },
+    {
+      "_id": "artnet.meta.rgb",
+      "type": "meta",
+      "parent": "artnet.meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": "fixture"
+      },
+      "common": {
+        "name": "generic rgb"
+      },
+      "native": {
+        "channel": {
+          "type": "channel",
+          "common": {
+            "role": "light.rgb"
+          },
+          "native": {}
+        },
+        "length": 3,
+        "states": [
+          {
+            "type": "state",
+            "common": {
+              "role": "level.color.red",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.color.green",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.color.blue",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.color.rgb",
+              "type": "string",
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          }
+        ]
+      }
+    },
+    {
+      "_id": "artnet.meta.rgbw",
+      "type": "meta",
+      "parent": "artnet.meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": "fixture"
+      },
+      "common": {
+        "name": "generic rgbw"
+      },
+      "native": {
+        "channel": {
+          "type": "channel",
+          "common": {
+            "role": "light.rgbw"
+          },
+          "native": {}
+        },
+        "length": 4,
+        "states": [
+          {
+            "type": "state",
+            "common": {
+              "role": "level.rgbw.red",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.rgbw.green",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.rgbw.blue",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.rgbw.white",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "light.color.rgb",
+              "type": "string",
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          }
+        ]
+      }
+    },
+    {
+      "_id": "artnet.meta.cmy",
+      "type": "meta",
+      "parent": "artnet.meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": "fixture"
+      },
+      "common": {
+        "name": "generic cmy"
+      },
+      "native": {
+        "channel": {
+          "type": "channel",
+          "common": {
+            "role": "light.cmy"
+          },
+          "native": {}
+        },
+        "length": 4,
+        "states": [
+          {
+            "type": "state",
+            "common": {
+              "role": "level.dimmer",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.cmy.cyan",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.cmy.magenta",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.cmy.yellow",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          }
+        ]
+      }
+    },
+    {
+      "_id": "artnet.meta.cct",
+      "type": "meta",
+      "parent": "artnet.meta",
+      "meta": {
+        "adapter": "artnet",
+        "type": "fixture"
+      },
+      "common": {
+        "name": "generic cct"
+      },
+      "native": {
+        "channel": {
+          "type": "channel",
+          "common": {
+            "role": "light.cct"
+          },
+          "native": {}
+        },
+        "length": 4,
+        "states": [
+          {
+            "type": "state",
+            "common": {
+              "role": "level.dimmer",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.cct.cct",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.cct.saturation",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          },
+          {
+            "type": "state",
+            "common": {
+              "role": "level.cct.hue",
+              "type": "number",
+              "min": 0,
+              "max": 255,
+              "write": true,
+              "read": false
+            },
+            "native": {}
+          }
+        ]
+      }
+    }
+  ]
 }
