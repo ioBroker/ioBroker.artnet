@@ -11,6 +11,10 @@ Control DMX512 Devices via an Art-Net node.
 You can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/avr/dmx-avr-artnetnode].
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 1.2.2 (2020-04-08)
 * (bluefox) Support of compact mode
 
