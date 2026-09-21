@@ -39,6 +39,8 @@ You can read more about art-net (here)[http://www.ulrichradig.de/home/index.php/
 ### 0.0.1 (2014-10-19)
 * (hobbyquaker) working on device management
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
