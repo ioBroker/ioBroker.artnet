@@ -73,6 +73,7 @@
         "materialize": true,
         "compact": true,
         "loglevel": "info",
+        "tier": 2,
         "readme": "https://github.com/ioBroker/iobroker.artnet/blob/master/README.md",
         "keywords": [
             "Art-Net",
