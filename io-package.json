@@ -73,7 +73,9 @@
         },
         "platform": "Javascript/Node.js",
         "mode": "daemon",
-        "materialize": true,
+        "adminUI": {
+            "config": "materialize"
+        },
         "compact": true,
         "loglevel": "info",
         "tier": 2,
