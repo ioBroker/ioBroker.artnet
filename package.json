@@ -28,7 +28,7 @@
     "@iobroker/adapter-core": "^2.2.1"
   },
   "devDependencies": {
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "mocha": "^7.1.1",
     "chai": "^4.2.0",
     "@iobroker/testing": "^2.1.0"
